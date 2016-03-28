@@ -74,6 +74,15 @@ public class ApiRequests {
         return request;
     }
 
+    /**
+     * 组装请求参数
+     * @param userId
+     * @param topic
+     * @param untilId 如果是加载更多，则记录最后一个顺序Id，否则为0.
+     * @param count  每页加载的数据条数.
+     * @param context
+     * @return
+     */
     // Lint warns about formatting with an Object (Long), but not long.
     @SuppressLint("DefaultLocale")
     public static ApiRequest<List<Broadcast>> newBroadcastListRequest(Long userId, String topic,

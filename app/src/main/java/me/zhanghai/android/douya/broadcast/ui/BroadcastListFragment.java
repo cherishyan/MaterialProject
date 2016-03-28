@@ -276,7 +276,7 @@ public class BroadcastListFragment extends Fragment implements RequestFragment.L
     }
 
     /**
-     * ��ݼ���
+     * 请求数据
      * @param loadMore
      */
     private void loadBroadcastList(boolean loadMore) {

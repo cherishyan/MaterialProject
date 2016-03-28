@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 /**
+ * 用一个fragment存储数据，防止activity被重建数据丢失，如屏幕翻转。
  * An one-shot Fragment for performing a {@link Request} safely across Activity re-creation.
  *
  * <p>Response will only be delivered when this Fragment is in resumed state. This Fragment will be
