@@ -58,6 +58,9 @@ import me.zhanghai.android.douya.util.ToastUtils;
 import me.zhanghai.android.douya.util.TransitionUtils;
 import me.zhanghai.android.douya.util.ViewUtils;
 
+/**
+ * 友邻广播的展示界面
+ */
 public class BroadcastListFragment extends Fragment implements RequestFragment.Listener,
         BroadcastAdapter.Listener {
 
@@ -85,10 +88,11 @@ public class BroadcastListFragment extends Fragment implements RequestFragment.L
     ProgressBar mProgress;
     @Bind(R.id.send)
     FriendlyFloatingActionButton mSendFab;
-
+    //保存数据的fragment,防止被忽然销毁数据丢失.
     private RetainDataFragment mRetainDataFragment;
-
+    //数据适配器
     private BroadcastAdapter mBroadcastAdapter;
+    //加载更多适配器
     private LoadMoreAdapter mAdapter;
     private boolean mCanLoadMore;
 
@@ -108,13 +112,14 @@ public class BroadcastListFragment extends Fragment implements RequestFragment.L
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //fragment的布局
         return inflater.inflate(R.layout.broadcast_list_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        //注解
         ButterKnife.bind(this, view);
     }
 
@@ -126,7 +131,7 @@ public class BroadcastListFragment extends Fragment implements RequestFragment.L
 
         CustomTabsHelperFragment.attachTo(this);
         mRetainDataFragment = RetainDataFragment.attachTo(this);
-
+        //下拉刷新的监听
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -134,7 +139,7 @@ public class BroadcastListFragment extends Fragment implements RequestFragment.L
                 activity.refreshNotificationList();
             }
         });
-
+        //设置mBroadcastList(recyclerView)的显示
         mBroadcastList.setHasFixedSize(true);
         mBroadcastList.setItemAnimator(new NoChangeAnimationItemAnimator());
             if (ViewUtils.hasSw600dp(activity)) {
@@ -146,9 +151,11 @@ public class BroadcastListFragment extends Fragment implements RequestFragment.L
         }
         List<Broadcast> broadcastList = mRetainDataFragment.remove(RETAIN_DATA_KEY_BROADCAST_LIST);
         mBroadcastAdapter = new BroadcastAdapter(broadcastList, this);
+        //添加加载更多adapter
         mAdapter = new LoadMoreAdapter(R.layout.load_more_card_item, mBroadcastAdapter);
         mBroadcastList.setAdapter(mAdapter);
         final AppBarManager appBarManager = (AppBarManager) getParentFragment();
+        //滑动监听，使其下滑的时候去掉appbar
         mBroadcastList.addOnScrollListener(new OnVerticalScrollWithPagingSlopListener(activity) {
             @Override
             public void onScrolledUp(int dy) {
@@ -322,7 +329,7 @@ public class BroadcastListFragment extends Fragment implements RequestFragment.L
             mLoadingBroadcastList = false;
         }
     }
-
+    //设置刷新
     private void setRefreshing(boolean refreshing, boolean loadMore) {
         mSwipeRefreshLayout.setEnabled(!refreshing);
         if (!refreshing) {
