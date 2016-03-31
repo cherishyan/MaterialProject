@@ -24,6 +24,7 @@ import me.zhanghai.android.douya.network.api.info.Notification;
 import me.zhanghai.android.douya.network.api.info.NotificationList;
 import me.zhanghai.android.douya.network.api.info.User;
 import me.zhanghai.android.douya.network.api.info.UserInfo;
+import me.zhanghai.android.douya.network.zhihuInfo.Latest;
 
 public class ApiRequests {
 
@@ -228,5 +229,17 @@ public class ApiRequests {
         return new ApiRequest<>(ApiRequest.Method.DELETE,
                 String.format(ApiContract.Request.DeleteBroadcast.URL_FORMAT, broadcastId),
                 new TypeToken<Broadcast>() {}, context);
+    }
+
+
+     /** zhihu Uri start */
+    public static ApiRequest<List<Latest>> zhihuLatestRequest(Context context){
+        //请求地址,从ApiContract中获取
+        String url;
+        url = ApiContract.Request.ZhihuLatest.LATEST_NEWS;
+        ApiRequest<List<Latest>> request = new ApiRequest<List<Latest>>(ApiRequest.Method.GET, url,
+                new TypeToken<List<Latest>>() {}, context);
+
+        return request;
     }
 }

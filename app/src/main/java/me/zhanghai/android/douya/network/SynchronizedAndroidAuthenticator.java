@@ -11,7 +11,7 @@ import android.content.Context;
 import com.android.volley.AuthFailureError;
 import com.android.volley.toolbox.AndroidAuthenticator;
 
-/**
+/** google验证应用安全保证用户数据的方法，将其实现为同步验证。
  * An {@link AndroidAuthenticator} with {@link #getAuthToken()} synchronized.
  */
 public class SynchronizedAndroidAuthenticator extends AndroidAuthenticator {

@@ -19,6 +19,13 @@ public interface ApiContract {
         int BACKOFF_MULTIPLIER = 1;
 
         String API_HOST = "https://api.douban.com/v2/";
+        //添加zhihu的apiHost
+        String ZHIHU_HOST = "http://news-at.zhihu.com/api/4/";
+
+        interface ZhihuLatest{
+            String LATEST_NEWS = ZHIHU_HOST +"news/latest";
+            String NEWS_CONTENT = ZHIHU_HOST +"news/"; //获取消息内容，需要拼接
+        }
 
         @me.zhanghai.android.douya.network.api.Frodo
         interface Frodo {
