@@ -54,7 +54,7 @@ public class zhihuNewsFragment extends Fragment implements RequestFragment.Liste
         LoadBroadcastListState state = new LoadBroadcastListState(false, 20);
         RequestFragment.startRequest(0, request, state, this);
 
-    }
+    }   
 
 
     @Override
