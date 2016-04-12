@@ -50,7 +50,7 @@ public class zhihuNewsFragment extends Fragment implements RequestFragment.Liste
      * loading data
      */
     public void initData(){
-        ApiRequest<List<Latest>> request = ApiRequests.zhihuLatestRequest(getActivity());
+        ApiRequest<Latest> request = ApiRequests.zhihuLatestRequest(getActivity());
         LoadBroadcastListState state = new LoadBroadcastListState(false, 20);
         RequestFragment.startRequest(0, request, state, this);
 
@@ -62,7 +62,10 @@ public class zhihuNewsFragment extends Fragment implements RequestFragment.Liste
         switch (requestCode) {
             case 0:
                 // TODO
-                LogUtils.e("123");
+                if(result != null)
+                    LogUtils.e("123"+result);
+                else
+                    LogUtils.e("error:123"+error.getMessage());
                 break;
         }
     }

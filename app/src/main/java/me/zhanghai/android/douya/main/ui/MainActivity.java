@@ -35,6 +35,7 @@ import me.zhanghai.android.douya.ui.ActionItemBadge;
 import me.zhanghai.android.douya.ui.AppBarWrapperLayout;
 import me.zhanghai.android.douya.ui.TabFragmentPagerAdapter;
 import me.zhanghai.android.douya.util.TransitionUtils;
+import me.zhanghai.android.douya.zhihu.zhihuNewsFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NotificationListFragment.UnreadNotificationCountListener {
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity
     private int mUnreadNotificationCount;
 
     private NotificationListFragment mNotificationListFragment;
+    private zhihuNewsFragment  mZhihuNewsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,5 +177,6 @@ public class MainActivity extends AppCompatActivity
 
     public void refreshNotificationList() {
         mNotificationListFragment.refresh();
+//        mZhihuNewsFragment.refresh();
     }
 }

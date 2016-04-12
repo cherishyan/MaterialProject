@@ -3,6 +3,8 @@ package me.zhanghai.android.douya.network.zhihuInfo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 /**
  * @author  yanjinqiang
  * @time 2016/3/31.
@@ -10,9 +12,29 @@ import android.os.Parcelable;
 public class BaseNewsContent implements Parcelable {
     public String ga_prefix;
     public long id;
-    public String images;
+    public ArrayList<String> images = new ArrayList<>();
     public String titile;
     public long type;
+
+    protected BaseNewsContent(Parcel in) {
+        ga_prefix = in.readString();
+        id = in.readLong();
+        images = in.createStringArrayList();
+        titile = in.readString();
+        type = in.readLong();
+    }
+
+    public static final Creator<BaseNewsContent> CREATOR = new Creator<BaseNewsContent>() {
+        @Override
+        public BaseNewsContent createFromParcel(Parcel in) {
+            return new BaseNewsContent(in);
+        }
+
+        @Override
+        public BaseNewsContent[] newArray(int size) {
+            return new BaseNewsContent[size];
+        }
+    };
 
     @Override
     public int describeContents() {
@@ -21,6 +43,10 @@ public class BaseNewsContent implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeString(ga_prefix);
+        dest.writeLong(id);
+        dest.writeStringList(images);
+        dest.writeString(titile);
+        dest.writeLong(type);
     }
 }

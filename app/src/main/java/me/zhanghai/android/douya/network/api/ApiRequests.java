@@ -233,12 +233,12 @@ public class ApiRequests {
 
 
      /** zhihu Uri start */
-    public static ApiRequest<List<Latest>> zhihuLatestRequest(Context context){
+    public static ApiRequest<Latest> zhihuLatestRequest(Context context){
         //请求地址,从ApiContract中获取
         String url;
         url = ApiContract.Request.ZhihuLatest.LATEST_NEWS;
-        ApiRequest<List<Latest>> request = new ApiRequest<List<Latest>>(ApiRequest.Method.GET, url,
-                new TypeToken<List<Latest>>() {}, context);
+        ApiRequest<Latest> request = new ApiRequest<Latest>(ApiRequest.Method.GET, url,
+                new TypeToken<Latest>() {}, context);
 
         return request;
     }
