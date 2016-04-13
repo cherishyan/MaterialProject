@@ -8,7 +8,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:progressOffset="@dimen/toolbar_and_tab_height">
-
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/news_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            android:scrollbarStyle="outsideOverlay" />
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="gone"
+            style="@style/Widget.MaterialProgressBar.ProgressBar" />
 
     </me.zhanghai.android.douya.ui.FriendlySwipeRefreshLayout>
 </FrameLayout>

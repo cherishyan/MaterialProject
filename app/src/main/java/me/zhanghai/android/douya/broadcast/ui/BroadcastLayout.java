@@ -28,6 +28,7 @@ import me.zhanghai.android.douya.network.api.info.Attachment;
 import me.zhanghai.android.douya.network.api.info.Broadcast;
 import me.zhanghai.android.douya.network.api.info.Image;
 import me.zhanghai.android.douya.network.api.info.Photo;
+import me.zhanghai.android.douya.network.zhihuInfo.BaseNewsContent;
 import me.zhanghai.android.douya.ui.CardIconButton;
 import me.zhanghai.android.douya.ui.GalleryActivity;
 import me.zhanghai.android.douya.ui.HorizontalImageAdapter;
@@ -153,7 +154,25 @@ public class BroadcastLayout extends LinearLayout {
         CheatSheetUtils.setup(mCommentButton);
         CheatSheetUtils.setup(mRebroadcastButton);
     }
+    public void bindzhihuNews(final BaseNewsContent content){
+        final Context context = getContext();
+        //设置头像url
+        ImageUtils.loadAvatar(mAvatarImage, null, context);
+        // TODO 作者
+        mNameText.setText("Unknown Author");
+        //时间
+//        mTimeActionText.setDoubanTimeAndAction(broadcast.createdAt, broadcast.action);
+        mAttachmentLayout.setVisibility(View.VISIBLE);
+        mAttachmentTitleText.setText(content.titile);
+//        mAttachmentDescriptionText.setText(content);
+        if(content.images!=null) {
+            mAttachmentImage.setVisibility(View.VISIBLE);
+            ImageUtils.loadImage(mAttachmentImage, content.images.get(0), context);
+        }else
+            mAttachmentImage.setVisibility(View.GONE);
 
+    }
+    //这是给broadcastListFragment设置条目内容
     public void bindBroadcast(final Broadcast broadcast) {
 
         final Context context = getContext();

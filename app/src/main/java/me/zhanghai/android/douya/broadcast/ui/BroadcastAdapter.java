@@ -38,7 +38,6 @@ public class BroadcastAdapter extends SimpleAdapter<Broadcast, BroadcastAdapter.
     public Broadcast findBroadcastById(long broadcastId) {
         int count = getItemCount();
         for (int i = 0; i < count; ++i) {
-            //BeanÀà
             Broadcast broadcast = getItem(i);
             if (broadcast.id == broadcastId) {
                 return broadcast;
