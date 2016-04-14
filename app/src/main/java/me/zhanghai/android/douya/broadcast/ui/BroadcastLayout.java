@@ -19,7 +19,11 @@ import android.widget.RelativeLayout;
 import android.widget.Space;
 import android.widget.TextView;
 
+import org.threeten.bp.ZonedDateTime;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,6 +44,7 @@ import me.zhanghai.android.douya.ui.TimeActionTextView;
 import me.zhanghai.android.douya.util.CheatSheetUtils;
 import me.zhanghai.android.douya.util.DrawableUtils;
 import me.zhanghai.android.douya.util.ImageUtils;
+import me.zhanghai.android.douya.util.TimeUtils;
 import me.zhanghai.android.douya.util.ViewCompat;
 import me.zhanghai.android.douya.util.ViewUtils;
 
@@ -159,18 +164,23 @@ public class BroadcastLayout extends LinearLayout {
         //设置头像url
         ImageUtils.loadAvatar(mAvatarImage, null, context);
         // TODO 作者
-        mNameText.setText("Unknown Author");
+        mNameText.setText("知乎日报");
         //时间
-//        mTimeActionText.setDoubanTimeAndAction(broadcast.createdAt, broadcast.action);
-        mAttachmentLayout.setVisibility(View.VISIBLE);
-        mAttachmentTitleText.setText(content.titile);
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+        sdf.format(date);
+        mTimeActionText.setDoubanTimeAndAction(sdf.format(date),"发布了新话题");
+//        mAttachmentLayout.setVisibility(View.VISIBLE);
+        mAttachmentTitleText.setText(content.title);
 //        mAttachmentDescriptionText.setText(content);
         if(content.images!=null) {
             mAttachmentImage.setVisibility(View.VISIBLE);
             ImageUtils.loadImage(mAttachmentImage, content.images.get(0), context);
-        }else
+        }else {
             mAttachmentImage.setVisibility(View.GONE);
-
+        }
+        mSingleImageLayout.setVisibility(View.GONE);
+        mImageListLayout.setVisibility(View.GONE);
     }
     //这是给broadcastListFragment设置条目内容
     public void bindBroadcast(final Broadcast broadcast) {

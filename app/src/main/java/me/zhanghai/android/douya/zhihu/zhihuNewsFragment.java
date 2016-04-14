@@ -21,6 +21,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.zhanghai.android.customtabshelper.CustomTabsHelperFragment;
 import me.zhanghai.android.douya.R;
+import me.zhanghai.android.douya.app.RetainDataFragment;
 import me.zhanghai.android.douya.broadcast.ui.BroadcastAdapter;
 import me.zhanghai.android.douya.main.ui.MainActivity;
 import me.zhanghai.android.douya.network.RequestFragment;
@@ -46,12 +47,14 @@ public class zhihuNewsFragment extends Fragment implements RequestFragment.Liste
     @Bind(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.news_list)
-
     RecyclerView mNewslist;
-    boolean reFresh = false;
-    List<BaseNewsContent> mContent;
+//    List<BaseNewsContent> mContent;
     zhihuAdapter mAdapter;
     LoadMoreAdapter mLoadMoreAdapter;
+    //保存数据的fragment,防止被忽然销毁数据丢失.
+    private RetainDataFragment mRetainDataFragment;
+    private static final String KEY = zhihuNewsFragment.class.getName() + '.';
+    private static final String RETAIN_DATA_KEY_NEWS_LIST = KEY + "zhihuNews_list";
 
     public static zhihuNewsFragment newInstance() {
         //noinspection deprecation
@@ -77,6 +80,8 @@ public class zhihuNewsFragment extends Fragment implements RequestFragment.Liste
         super.onActivityCreated(savedInstanceState);
         final MainActivity activity = (MainActivity) getActivity();
         CustomTabsHelperFragment.attachTo(this);
+        //保存数据
+        mRetainDataFragment = RetainDataFragment.attachTo(this);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -94,6 +99,8 @@ public class zhihuNewsFragment extends Fragment implements RequestFragment.Liste
         }
         final AppBarManager appBarManager = (AppBarManager) getParentFragment();
         //数据adapter
+        List<BaseNewsContent> mContent = mRetainDataFragment.remove(RETAIN_DATA_KEY_NEWS_LIST);
+
         mAdapter = new zhihuAdapter(mContent, this);
         //添加加载更多adapter
         mLoadMoreAdapter = new LoadMoreAdapter(R.layout.load_more_card_item, mAdapter);
@@ -130,10 +137,15 @@ public class zhihuNewsFragment extends Fragment implements RequestFragment.Liste
 
             @Override
             public void onScrolledToBottom() {
-                reFresh = true;
                 initData();
             }
         });
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mRetainDataFragment.put(RETAIN_DATA_KEY_NEWS_LIST, mAdapter.getList());
+
     }
 
     /**
@@ -141,14 +153,17 @@ public class zhihuNewsFragment extends Fragment implements RequestFragment.Liste
      */
     public void initData(){
         ApiRequest<Latest> request = ApiRequests.zhihuLatestRequest(getActivity());
-        LoadBroadcastListState state = new LoadBroadcastListState(false, 20);
+        LoadzhihuNewsListState state = new LoadzhihuNewsListState(false, 20);
         RequestFragment.startRequest(0, request, state, this);
         onRefresh(true);
 
     }
     //刷新界面
     public void onRefresh(boolean isRefresh){
-            mSwipeRefreshLayout.setRefreshing(!isRefresh);
+            mSwipeRefreshLayout.setEnabled(!isRefresh);
+        if (!isRefresh) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
     }
     @Override
     public void onVolleyResponse(int requestCode, boolean successful, Object result, VolleyError error, Object requestState) {
@@ -158,7 +173,7 @@ public class zhihuNewsFragment extends Fragment implements RequestFragment.Liste
                 if(result != null) {
                     LogUtils.e("Result successful" + result);
                     //接口返回数据
-                    onNewsResponse((Latest) result);
+                    onNewsResponse((Latest) result,(LoadzhihuNewsListState) requestState);
                 }
                 else
                     LogUtils.e("VolleyError:"+error.getMessage());
@@ -166,10 +181,13 @@ public class zhihuNewsFragment extends Fragment implements RequestFragment.Liste
         }
     }
 
-    private void onNewsResponse(Latest result){
+    private void onNewsResponse(Latest result,LoadzhihuNewsListState state){
         if(result.date!=null) {
             LogUtils.e(result.date);
-            mContent = result.stories;
+//            mContent = result.stories;
+            mAdapter.replace(result.stories);
+
+            onRefresh(false);
         }
     }
 
@@ -179,12 +197,12 @@ public class zhihuNewsFragment extends Fragment implements RequestFragment.Liste
 
     }
 
-    private static class LoadBroadcastListState {
+    private static class LoadzhihuNewsListState {
 
         public boolean loadMore;
         public int count;
 
-        public LoadBroadcastListState(boolean loadMore, int count) {
+        public LoadzhihuNewsListState(boolean loadMore, int count) {
             this.loadMore = loadMore;
             this.count = count;
         }

@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         // Was Theme.Douya.MainActivity.ColdStart.
-        setTheme(R.style.Theme_Douya_MainActivity);
+//        setTheme(R.style.Theme_Douya_MainActivity);
 
         TransitionUtils.setupTransitionBeforeDecorate(this);
 

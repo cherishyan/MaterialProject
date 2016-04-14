@@ -22,7 +22,7 @@
         android:name=".DouyaApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
-        android:icon="@mipmap/launcher_icon"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Douya"
         tools:ignore="UnusedAttribute">
@@ -59,7 +59,7 @@
             android:name=".main.ui.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.Douya.MainActivity.ColdStart">
+            >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

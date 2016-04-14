@@ -80,7 +80,7 @@
     <style name="Theme.Douya.MainActivity" parent="Theme.Douya.ScrimStatusBar">
         <item name="android:windowBackground">@color/grey_200</item>
     </style>
-
+    <!-- 冷启动的背景-->
     <style name="Theme.Douya.MainActivity.ColdStart">
         <item name="android:windowBackground">@drawable/window_background_statusbar_toolbar_tab</item>
     </style>

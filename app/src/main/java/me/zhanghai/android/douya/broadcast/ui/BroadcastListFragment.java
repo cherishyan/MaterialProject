@@ -155,6 +155,8 @@ public class BroadcastListFragment extends Fragment implements RequestFragment.L
         mAdapter = new LoadMoreAdapter(R.layout.load_more_card_item, mBroadcastAdapter);
         mBroadcastList.setAdapter(mAdapter);
         final AppBarManager appBarManager = (AppBarManager) getParentFragment();
+        //隐藏
+        mSendFab.hide();
         //滑动监听，使其下滑的时候去掉appbar
         mBroadcastList.addOnScrollListener(new OnVerticalScrollWithPagingSlopListener(activity) {
             @Override
@@ -171,13 +173,13 @@ public class BroadcastListFragment extends Fragment implements RequestFragment.L
             }
             private void onShow() {
                 appBarManager.showAppBar();
-                mSendFab.show();
+//                mSendFab.show();
             }
             @Override
             public void onScrolledDown() {
                 if (RecyclerViewUtils.hasFirstChildReachedTop(mBroadcastList)) {
                     appBarManager.hideAppBar();
-                    mSendFab.hide();
+//                    mSendFab.hide();
                 }
             }
             @Override
@@ -185,14 +187,15 @@ public class BroadcastListFragment extends Fragment implements RequestFragment.L
                 loadBroadcastList(true);
             }
         });
-
-        CheatSheetUtils.setup(mSendFab);
-        mSendFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onSendBroadcast();
-            }
-        });
+        //隐藏
+//
+//        CheatSheetUtils.setup(mSendFab);
+//        mSendFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                onSendBroadcast();
+//            }
+//        });
 
         Boolean canLoadMore = mRetainDataFragment.remove(RETAIN_DATA_KEY_CAN_LOAD_MORE);
         mCanLoadMore = canLoadMore != null ? canLoadMore : true;

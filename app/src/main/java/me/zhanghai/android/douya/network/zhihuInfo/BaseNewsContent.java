@@ -13,14 +13,14 @@ public class BaseNewsContent implements Parcelable {
     public String ga_prefix;
     public long id;
     public ArrayList<String> images = new ArrayList<>();
-    public String titile;
+    public String title;
     public long type;
 
     protected BaseNewsContent(Parcel in) {
         ga_prefix = in.readString();
         id = in.readLong();
         images = in.createStringArrayList();
-        titile = in.readString();
+        title = in.readString();
         type = in.readLong();
     }
 
@@ -46,7 +46,7 @@ public class BaseNewsContent implements Parcelable {
         dest.writeString(ga_prefix);
         dest.writeLong(id);
         dest.writeStringList(images);
-        dest.writeString(titile);
+        dest.writeString(title);
         dest.writeLong(type);
     }
 }

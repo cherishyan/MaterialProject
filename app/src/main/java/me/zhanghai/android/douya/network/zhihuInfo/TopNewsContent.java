@@ -13,7 +13,7 @@ public class TopNewsContent implements Parcelable {
     public String ga_prefix;
     public long id;
     public String image;
-    public String titile;
+    public String title;
     public long type;
 
 
@@ -21,7 +21,7 @@ public class TopNewsContent implements Parcelable {
         ga_prefix = in.readString();
         id = in.readLong();
         image = in.readString();
-        titile = in.readString();
+        title = in.readString();
         type = in.readLong();
     }
 
@@ -30,7 +30,7 @@ public class TopNewsContent implements Parcelable {
         dest.writeString(ga_prefix);
         dest.writeLong(id);
         dest.writeString(image);
-        dest.writeString(titile);
+        dest.writeString(title);
         dest.writeLong(type);
     }
 
