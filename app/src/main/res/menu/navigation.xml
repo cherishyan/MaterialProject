@@ -18,18 +18,18 @@
 
         <item
             android:id="@+id/navigation_book"
-            android:icon="@drawable/book_icon_black_24dp"
-            android:title="@string/navigation_book" />
+            android:icon="@drawable/home_icon_black_24dp"
+            android:title="@string/navigation_home" />
 
         <item
             android:id="@+id/navigation_music"
-            android:icon="@drawable/music_icon_black_24dp"
-            android:title="@string/navigation_music" />
+            android:icon="@drawable/home_icon_black_24dp"
+            android:title="@string/navigation_home" />
 
         <item
             android:id="@+id/navigation_movie"
-            android:icon="@drawable/movie_icon_black_24dp"
-            android:title="@string/navigation_movie" />
+            android:icon="@drawable/home_icon_black_24dp"
+            android:title="@string/navigation_home" />
     </group>
 
     <!-- Set an id on this group to show a divider. -->
@@ -43,6 +43,6 @@
         <item
             android:id="@+id/navigation_feedback"
             android:icon="@drawable/feedback_icon_black_24dp"
-            android:title="@string/navigation_feedback" />
+            android:title="@string/settings_about_title" />
     </group>
 </menu>

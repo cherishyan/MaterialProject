@@ -11,6 +11,7 @@ import android.net.Uri;
 
 import org.chromium.customtabsclient.CustomTabsActivityHelper;
 
+import me.zhanghai.android.douya.network.api.ApiContract;
 import me.zhanghai.android.douya.settings.info.Settings;
 import me.zhanghai.android.douya.util.UrlUtils;
 
@@ -51,4 +52,10 @@ public class UriHandler {
     public static void open(String url, Context context) {
         open(Uri.parse(url), context, true);
     }
+    public static void openZhihuNews(String id, Context context) {
+        //拼接一下zhihu的url
+        String url = ApiContract.Request.ZhihuLatest.NEWS_CONTENT + id;
+        open(Uri.parse(url), context, true);
+    }
+
 }

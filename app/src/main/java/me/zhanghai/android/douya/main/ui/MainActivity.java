@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.navigation_settings:
-                                onShowSettings();
+//                                onShowSettings();
                                 break;
                         }
                         // TODO
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         mNotificationMenu = menu.findItem(R.id.action_notification);
-        ActionItemBadge.setup(mNotificationMenu, R.drawable.notifications_icon_white_24dp,
+        ActionItemBadge.setup(mNotificationMenu, R.drawable.search_icon_white_24dp,
                 mUnreadNotificationCount, this);
         return true;
     }

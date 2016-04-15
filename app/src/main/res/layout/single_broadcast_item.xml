@@ -24,6 +24,7 @@
         android:paddingLeft="@dimen/card_content_horizontal_margin_with_12dp_padding"
         android:paddingRight="@dimen/card_content_horizontal_margin_with_12dp_padding"
         android:orientation="horizontal"
+        android:visibility="gone"
         style="?buttonBarStyle">
 
         <Button

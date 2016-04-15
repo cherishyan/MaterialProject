@@ -167,10 +167,10 @@ public class BroadcastLayout extends LinearLayout {
         mNameText.setText("知乎日报");
         //时间
         Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.format(date);
         mTimeActionText.setDoubanTimeAndAction(sdf.format(date),"发布了新话题");
-//        mAttachmentLayout.setVisibility(View.VISIBLE);
+        mAttachmentLayout.setVisibility(View.VISIBLE);
         mAttachmentTitleText.setText(content.title);
 //        mAttachmentDescriptionText.setText(content);
         if(content.images!=null) {
@@ -179,6 +179,13 @@ public class BroadcastLayout extends LinearLayout {
         }else {
             mAttachmentImage.setVisibility(View.GONE);
         }
+        mAttachmentLayout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //点击跳转网页
+                UriHandler.openZhihuNews(String.valueOf(content.id), context);
+            }
+        });
         mSingleImageLayout.setVisibility(View.GONE);
         mImageListLayout.setVisibility(View.GONE);
     }
