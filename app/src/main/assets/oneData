@@ -1,0 +1,41 @@
+import argparse
+import re
+from multiprocessing import Pool
+import requests
+import bs4
+import time
+import json
+import io
+
+
+root_url = 'http://wufazhuce.com'
+def get_child_url(url):
+        response = requests.get(url)
+        soup = bs4.BeautifulSoup(response.text,"html.parser")
+        div =  soup.find_all("div",class_='item active')
+        for i in div:
+                child_url = i.a.attrs['href']
+        return child_url
+def get_data(url):
+  dataList = {}
+  response = requests.get(url)
+  if response.status_code != 200:
+      return {'noValue': 'noValue'}
+  soup = bs4.BeautifulSoup(response.text,"html.parser")
+  dataList["index"] = soup.title.string[4:8]
+  for meta in soup.select('meta'):
+    if meta.get('name') == 'description':
+         dataList["content"] = meta.get('content')
+  dataList["imgUrl"] = soup.find_all('img')[1]['src']
+  return dataList
+
+if __name__=='__main__':
+        url = get_child_url(root_url)
+        dataList = []
+        start = time.time()
+        dataList = get_data(url)
+        end = time.time()
+        print 'use: %.2f s' % (end - start)
+        jsonData = json.dumps({'data':dataList},encoding="UTF-8",ensure_ascii=False)
+        with open('one_data.txt', 'w') as outfile:
+            json.dump(jsonData, outfile)

@@ -76,6 +76,19 @@ public class zhihuNewsFragment extends Fragment implements RequestFragment.Liste
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        initData();
+    }
+
+    //在销毁的时候做数据本地保存，启动的时候可以快点拿到数据
+    @Override
+    public void onStop() {
+        super.onStop();
+//        if(mAdapter)
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         final MainActivity activity = (MainActivity) getActivity();

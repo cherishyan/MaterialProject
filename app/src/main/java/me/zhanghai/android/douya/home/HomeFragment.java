@@ -23,6 +23,7 @@ import me.zhanghai.android.douya.main.ui.MainActivity;
 import me.zhanghai.android.douya.ui.AppBarManager;
 import me.zhanghai.android.douya.ui.AppBarWrapperLayout;
 import me.zhanghai.android.douya.ui.TabFragmentPagerAdapter;
+import me.zhanghai.android.douya.zhihu.oneFragment;
 import me.zhanghai.android.douya.zhihu.zhihuNewsFragment;
 
 /**
@@ -70,7 +71,7 @@ public class HomeFragment extends Fragment implements AppBarManager {
         mTabAdapter = new TabFragmentPagerAdapter(getChildFragmentManager());
         mTabAdapter.addTab(BroadcastListFragment.newInstance(), getString(R.string.home_broadcast));//只有这个有数据
         mTabAdapter.addTab(zhihuNewsFragment.newInstance(), getString(R.string.home_nine_and_quater));
-        mTabAdapter.addTab(new Fragment(), getString(R.string.home_discover));
+        mTabAdapter.addTab(new oneFragment(), getString(R.string.home_discover));
         mTabAdapter.addTab(new Fragment(), getString(R.string.home_online));
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(mTabAdapter);
