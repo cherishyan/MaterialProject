@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--
-  ~ Copyright (c) 2015 Zhang Hai <Dreaming.in.Code.ZH@Gmail.com>
-  ~ All Rights Reserved.
-  -->
 
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="me.zhanghai.android.douya" >
+    package="me.jinqiang.android.material" >
 
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
@@ -19,7 +15,7 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
 
     <application
-        android:name=".DouyaApplication"
+        android:name="me.jinqiang.android.material.DouyaApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,35 +24,35 @@
         tools:ignore="UnusedAttribute">
 
         <activity
-            android:name=".account.ui.AuthenticatorActivity"
+            android:name="me.jinqiang.android.material.account.ui.AuthenticatorActivity"
             android:label="@string/auth_title_new"
             android:launchMode="singleTop"
             android:theme="@style/Theme.Douya.PrimaryColorBackground" />
 
         <activity
-            android:name=".account.ui.AddAccountActivity"
+            android:name="me.jinqiang.android.material.account.ui.AddAccountActivity"
             android:launchMode="singleTop"
             android:noHistory="true"
             android:theme="@style/Theme.Douya.NoDisplay" />
 
         <activity
-            android:name=".account.ui.SelectAccountActivity"
+            android:name="me.jinqiang.android.material.account.ui.SelectAccountActivity"
             android:launchMode="singleTop"
             android:noHistory="true"
             android:theme="@style/Theme.Douya.NoDisplay" />
 
         <activity
-            android:name=".ui.WebViewActivity"
+            android:name="me.jinqiang.android.material.ui.WebViewActivity"
             android:label="@string/webview_title"
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <activity
-            android:name=".ui.GalleryActivity"
+            android:name="me.jinqiang.android.material.ui.GalleryActivity"
             android:label="@string/gallery_title"
             android:theme="@style/Theme.Douya.Gallery" />
 
         <activity
-            android:name=".main.ui.MainActivity"
+            android:name="me.jinqiang.android.material.main.ui.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             >
@@ -68,29 +64,29 @@
         </activity>
 
         <activity
-            android:name=".broadcast.ui.BroadcastActivity"
+            android:name="me.jinqiang.android.material.broadcast.ui.BroadcastActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.Douya.DarkBackground"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name=".profile.ui.ProfileActivity"
+            android:name="me.jinqiang.android.material.profile.ui.ProfileActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.Douya.TransparentBackground"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name=".settings.ui.SettingsActivity"
+            android:name="me.jinqiang.android.material.settings.ui.SettingsActivity"
             android:label="@string/settings_title"
             android:theme="@style/Theme.Douya" />
 
         <activity
-            android:name=".settings.ui.AboutActivity"
+            android:name="me.jinqiang.android.material.settings.ui.AboutActivity"
             android:label="@string/about_title"
             android:theme="@style/Theme.Douya.PrimaryColorBackground" />
 
         <service
-            android:name=".account.app.AuthenticatorService"
+            android:name="me.jinqiang.android.material.account.app.AuthenticatorService"
             tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>

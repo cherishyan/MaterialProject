@@ -37,7 +37,7 @@
 
     <PreferenceCategory android:title="@string/settings_about_title">
 
-        <me.zhanghai.android.douya.settings.ui.LicensesDialogPreference
+        <me.jinqiang.android.material.settings.ui.LicensesDialogPreference
             android:title="@string/settings_open_source_licenses_title" />
 
         <Preference

@@ -5,7 +5,7 @@
   ~ All Rights Reserved.
   -->
 
-<me.zhanghai.android.douya.ui.ProfileLayout
+<me.jinqiang.android.material.ui.ProfileLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <me.zhanghai.android.douya.ui.ProfileHeaderLayout
+        <me.jinqiang.android.material.ui.ProfileHeaderLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,9 +64,9 @@
                     app:civ_border_color="@android:color/white"
                     app:civ_border_width="3dp" />
             </FrameLayout>
-        </me.zhanghai.android.douya.ui.ProfileHeaderLayout>
+        </me.jinqiang.android.material.ui.ProfileHeaderLayout>
 
-        <me.zhanghai.android.douya.ui.FlexibleSpaceScrollView
+        <me.jinqiang.android.material.ui.FlexibleSpaceScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/window_background_light"
@@ -96,6 +96,6 @@
                     android:text="ProfileActivityEnd"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
             </LinearLayout>
-        </me.zhanghai.android.douya.ui.FlexibleSpaceScrollView>
+        </me.jinqiang.android.material.ui.FlexibleSpaceScrollView>
     </LinearLayout>
-</me.zhanghai.android.douya.ui.ProfileLayout>
+</me.jinqiang.android.material.ui.ProfileLayout>
