@@ -58,4 +58,6 @@ dependencies {
     compile 'me.zhanghai.android.materialedittext:library:1.0.2'
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.5'
     compile 'me.zhanghai.android.systemuihelper:library:1.0.0'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
 }

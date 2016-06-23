@@ -7,10 +7,12 @@ package me.jinqiang.android.material.broadcast.ui;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -25,13 +27,17 @@ import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.jinqiang.android.material.network.api.ApiContract;
 import me.jinqiang.android.material.network.api.info.Attachment;
 import me.jinqiang.android.material.network.api.info.Photo;
 import me.jinqiang.android.material.network.zhihuInfo.BaseNewsContent;
+import me.jinqiang.android.material.network.zhihuInfo.ZhihuLatestDetail;
+import me.jinqiang.android.material.network.zhihuInfo.zhihuService;
 import me.jinqiang.android.material.ui.HorizontalImageAdapter;
 import me.jinqiang.android.material.ui.ImageLayout;
 import me.jinqiang.android.material.ui.OnHorizontalScrollListener;
 import me.jinqiang.android.material.ui.TimeActionTextView;
+import me.jinqiang.android.material.ui.WebViewActivity;
 import me.jinqiang.android.material.util.CheatSheetUtils;
 import me.jinqiang.android.material.util.DrawableUtils;
 import me.jinqiang.android.material.R;
@@ -44,6 +50,11 @@ import me.jinqiang.android.material.link.UriHandler;
 import me.jinqiang.android.material.util.ImageUtils;
 import me.jinqiang.android.material.util.ViewCompat;
 import me.jinqiang.android.material.util.ViewUtils;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A LinearLayout that can display a broadcast.
@@ -180,7 +191,32 @@ public class BroadcastLayout extends LinearLayout {
             @Override
             public void onClick(View v) {
                 //点击跳转网页
-                UriHandler.openZhihuNews(String.valueOf(content.id), context);
+//                UriHandler.openZhihuNews(String.valueOf(content.id), context);
+                //获取到的数据是json,body是HTML格式的,利用Retrofit处理数据并用WebView浏览页面。
+                //注意json格式的数据：
+                // 1.添加.addConverterFactory(GsonConverterFactory.create())
+                // 2. java Bean 序列化.
+                //TODO  listIitem 增加内容详情。
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(ApiContract.Request.ZhihuLatest.NEWS_CONTENT)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                zhihuService service = retrofit.create(zhihuService.class);
+                Call<ZhihuLatestDetail> repos = service.listRepos(String.valueOf(content.id));
+                repos.enqueue(new Callback<ZhihuLatestDetail>() {
+                    @Override
+                    public void onResponse(Call<ZhihuLatestDetail> call, Response<ZhihuLatestDetail> response) {
+                        if(response != null) {
+                            String url = response.body().getShare_url();
+                            Log.e("yjq", response.body().getShare_url());
+                            context.startActivity(WebViewActivity.makeIntent(Uri.parse(url), context));
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<ZhihuLatestDetail> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
             }
         });
         mSingleImageLayout.setVisibility(View.GONE);
