@@ -22,6 +22,8 @@ public interface ApiContract {
 
         String ZHIHU_HOST = "http://news-at.zhihu.com/api/4/";
 
+        String DOUYU_LIVE = "http://capi.douyucdn.cn";
+
         interface ZhihuLatest{
             String LATEST_NEWS = ZHIHU_HOST +"news/latest";
             String NEWS_CONTENT = ZHIHU_HOST +"news/";

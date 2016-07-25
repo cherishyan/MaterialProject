@@ -17,9 +17,9 @@
             android:title="@string/navigation_home" />
 
         <item
-            android:id="@+id/navigation_book"
+            android:id="@+id/navigation_live"
             android:icon="@drawable/home_icon_black_24dp"
-            android:title="@string/navigation_home" />
+            android:title="Live" />
 
         <item
             android:id="@+id/navigation_music"

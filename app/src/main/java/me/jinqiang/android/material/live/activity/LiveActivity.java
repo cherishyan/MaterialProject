@@ -1,19 +1,13 @@
-/*
- * Copyright (c) 2015 Zhang Hai <Dreaming.in.Code.ZH@Gmail.com>
- * All Rights Reserved.
- */
-
-package me.jinqiang.android.material.main.ui;
+package me.jinqiang.android.material.live.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.StrictMode;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -23,20 +17,18 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.jinqiang.android.material.BuildConfig;
 import me.jinqiang.android.material.R;
 import me.jinqiang.android.material.account.util.AccountUtils;
 import me.jinqiang.android.material.home.HomeFragment;
-import me.jinqiang.android.material.live.activity.LiveActivity;
+import me.jinqiang.android.material.live.LiveHomeFragment;
+import me.jinqiang.android.material.main.ui.MainActivity;
 import me.jinqiang.android.material.notification.ui.NotificationListFragment;
-import me.jinqiang.android.material.settings.ui.SettingsActivity;
-import me.jinqiang.android.material.ui.ActionItemBadge;
 import me.jinqiang.android.material.util.TransitionUtils;
-import me.jinqiang.android.material.zhihu.zhihuNewsFragment;
 
-public class MainActivity extends AppCompatActivity
-        implements NotificationListFragment.UnreadNotificationCountListener {
-
+/**
+ * @author  yanjinqiang on 2016/7/5.
+ */
+public class LiveActivity extends AppCompatActivity implements NotificationListFragment.UnreadNotificationCountListener{
     @Bind(R.id.drawer)
     DrawerLayout mDrawerLayout;
     @Bind(R.id.navigation)
@@ -52,36 +44,15 @@ public class MainActivity extends AppCompatActivity
     private MenuItem mNotificationMenu;
     private int mUnreadNotificationCount;
 
-    private NotificationListFragment mNotificationListFragment;
-    private zhihuNewsFragment  mZhihuNewsFragment;
     public static Intent makeIntent(Context context) {
-        return new Intent(context, MainActivity.class);
+        return new Intent(context, LiveActivity.class);
     }
+
+    private NotificationListFragment mNotificationListFragment;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        if (BuildConfig.DEBUG) {
-            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .build());
-            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .build());
-        }
-
-        // Was Theme.Douya.MainActivity.ColdStart.
-//        setTheme(R.style.Theme_Douya_MainActivity);
-
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         TransitionUtils.setupTransitionBeforeDecorate(this);
-
         super.onCreate(savedInstanceState);
-
-        if (!AccountUtils.ensureAccountAvailability(this)) {
-            return;
-        }
-
         setContentView(R.layout.main_activity);
         TransitionUtils.setupTransitionAfterSetContentView(this);
         ButterKnife.bind(this);
@@ -91,12 +62,13 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
-                            case R.id.navigation_settings:
+                            case R.id.navigation_home:
 //                                onShowSettings();
+                                startActivity(MainActivity.makeIntent(LiveActivity.this));
+                                finish();
                                 break;
                             case R.id.navigation_live: //live tv
-                                startActivity(LiveActivity.makeIntent(MainActivity.this));
-                                finish();
+
                                 break;
                         }
                         // TODO
@@ -112,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         mNavigationHeaderNameText = ButterKnife.findById(mNavigationHeaderLayout, R.id.name);
         mNavigationHeaderNameText.setText(AccountUtils.getUserName(this));
         // FIXME: Check remembered checked position.
-        mNavigationView.getMenu().getItem(0).setChecked(true);
+        mNavigationView.getMenu().getItem(1).setChecked(true);
 
         mNotificationListFragment = (NotificationListFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.notification_list_fragment);
@@ -120,20 +92,35 @@ public class MainActivity extends AppCompatActivity
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, HomeFragment.newInstance())
+                    .add(R.id.container, LiveHomeFragment.newInstance())
                     .commit();
         }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        mNotificationMenu = menu.findItem(R.id.action_notification);
-        ActionItemBadge.setup(mNotificationMenu, R.drawable.search_icon_white_24dp,
-                mUnreadNotificationCount, this);
-        return true;
+    public void onUnreadNotificationUpdate(int count) {
+
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(mNavigationView)) {
+            mDrawerLayout.closeDrawer(mNavigationView);
+        } else if (mDrawerLayout.isDrawerOpen(mNotificationDrawer)) {
+            mDrawerLayout.closeDrawer(mNotificationDrawer);
+        } else {
+            super.onBackPressed();
+        }
+    }
+    public void setToolbar(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        TransitionUtils.setupTransitionForAppBar(this);
+    }
+
+    public void refreshNotificationList() {
+        mNotificationListFragment.refresh();
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -149,37 +136,4 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(mNavigationView)) {
-            mDrawerLayout.closeDrawer(mNavigationView);
-        } else if (mDrawerLayout.isDrawerOpen(mNotificationDrawer)) {
-            mDrawerLayout.closeDrawer(mNotificationDrawer);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public void onUnreadNotificationUpdate(int count) {
-        mUnreadNotificationCount = count;
-        if (mNotificationMenu != null) {
-            ActionItemBadge.update(mNotificationMenu, mUnreadNotificationCount);
-        }
-    }
-
-    private void onShowSettings() {
-        startActivity(SettingsActivity.makeIntent(this));
-    }
-
-    public void setToolbar(Toolbar toolbar) {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        TransitionUtils.setupTransitionForAppBar(this);
-    }
-
-    public void refreshNotificationList() {
-        mNotificationListFragment.refresh();
-//        mZhihuNewsFragment.refresh();
-    }
 }
